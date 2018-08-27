@@ -20,7 +20,7 @@ export type Options = {
   backgroundColor: ?String,
   cacheBust: ?Boolean,
   imagePlaceholder: ?String, // DataURL
-}
+};
 
 export function toSvgDataURL(
   domNode: HTMLElement,
@@ -34,7 +34,7 @@ export function toSvgDataURL(
     .then(clonedNode => embedImages(clonedNode, options))
     .then(clonedNode => applyStyleWithOptions(clonedNode, options))
     .then(clonedNode => createSvgDataURL(clonedNode, width, height))
-}
+};
 
 export function toCanvas(
   domNode: HTMLElement,
@@ -66,7 +66,7 @@ export function toCanvas(
 
       return canvas
     })
-}
+};
 
 export function toPixelData(
   domNode: HTMLElement,
@@ -79,7 +79,7 @@ export function toPixelData(
     .then(canvas => (
       canvas.getContext('2d').getImageData(0, 0, width, height).data
     ))
-}
+};
 
 export function toPng(
   domNode: HTMLElement,
@@ -88,7 +88,7 @@ export function toPng(
   return toCanvas(domNode, options).then(canvas => (
     canvas.toDataURL()
   ))
-}
+};
 
 export function toJpeg(
   domNode: HTMLElement,
@@ -97,14 +97,14 @@ export function toJpeg(
   return toCanvas(domNode, options).then(canvas => (
     canvas.toDataURL('image/jpeg', options.quality || 1)
   ))
-}
+};
 
 export function toBlob(
   domNode: HTMLElement,
   options: Options = {},
 ): Promise<Blob> {
   return toCanvas(domNode, options).then(canvasToBlob)
-}
+};
 
 export default {
   toSvgDataURL,
@@ -113,4 +113,4 @@ export default {
   toPng,
   toJpeg,
   toBlob,
-}
+};
