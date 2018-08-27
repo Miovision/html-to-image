@@ -44,6 +44,7 @@ function cloneCssStyle(
 
   if (source.cssText) {
     target.cssText = source.cssText
+    target.font = source.font
   } else {
     toArray(source).forEach((name) => {
       target.setProperty(
