@@ -15,7 +15,6 @@
     "build:lib": "cross-env NODE_ENV=test babel src --out-dir lib ",
     "build:dist": "webpack",
     "build": "npm run clean && npm run build:lib && npm run build:dist",
-    "postinstall": "npm run build",
     "prebuild": "npm run lint",
     "prepublish": "npm run build",
     "precommit": "npm run lint"
