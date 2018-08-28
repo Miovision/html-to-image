@@ -15,7 +15,7 @@ const modules = {
 
 module.exports = [
   {
-    entry: './src/index.js',
+    entry: './src/index.ts',
     output: {
       path: path.resolve(__dirname, 'dist'),
       filename: 'html-to-image.js',
@@ -25,7 +25,7 @@ module.exports = [
     module: modules,
   },
   {
-    entry: './src/index.js',
+    entry: './src/index.ts',
     output: {
       path: path.resolve(__dirname, 'dist'),
       filename: 'html-to-image.min.js',
