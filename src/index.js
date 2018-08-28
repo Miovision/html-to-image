@@ -12,9 +12,19 @@ import {
   getPixelRatio,
 } from './utils'
 
+export type Options = {
+  filter: ?Function,
+  width: ?Number,
+  height: ?Number,
+  style: ?Object,
+  backgroundColor: ?String,
+  cacheBust: ?Boolean,
+  imagePlaceholder: ?String, // DataURL
+};
+
 export function toSvgDataURL(
   domNode: HTMLElement,
-  options,
+  options: Options = {},
 ): Promise<String> {
   const width = options.width || getNodeWidth(domNode)
   const height = options.height || getNodeHeight(domNode)
@@ -28,7 +38,7 @@ export function toSvgDataURL(
 
 export function toCanvas(
   domNode: HTMLElement,
-  options,
+  options: Options = {},
 ): Promise<HTMLCanvasElement> {
   return toSvgDataURL(domNode, options)
     .then(createImage)
@@ -60,7 +70,7 @@ export function toCanvas(
 
 export function toPixelData(
   domNode: HTMLElement,
-  options,
+  options: Options = {},
 ): Promise<Array> {
   const width = options.width || getNodeWidth(domNode)
   const height = options.height || getNodeHeight(domNode)
@@ -73,7 +83,7 @@ export function toPixelData(
 
 export function toPng(
   domNode: HTMLElement,
-  options,
+  options: Options = {},
 ): Promise<String> {
   return toCanvas(domNode, options).then(canvas => (
     canvas.toDataURL()
@@ -82,7 +92,7 @@ export function toPng(
 
 export function toJpeg(
   domNode: HTMLElement,
-  options,
+  options: Options = {},
 ): Promise<String> {
   return toCanvas(domNode, options).then(canvas => (
     canvas.toDataURL('image/jpeg', options.quality || 1)
@@ -91,7 +101,7 @@ export function toJpeg(
 
 export function toBlob(
   domNode: HTMLElement,
-  options,
+  options: Options = {},
 ): Promise<Blob> {
   return toCanvas(domNode, options).then(canvasToBlob)
 };
