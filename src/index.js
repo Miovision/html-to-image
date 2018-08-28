@@ -13,9 +13,9 @@ import {
 } from './utils'
 
 export function toSvgDataURL(
-  domNode: HTMLElement,
+  domNode,
   options,
-): Promise<String> {
+) {
   const width = options.width || getNodeWidth(domNode)
   const height = options.height || getNodeHeight(domNode)
 
@@ -27,9 +27,9 @@ export function toSvgDataURL(
 };
 
 export function toCanvas(
-  domNode: HTMLElement,
+  domNode,
   options,
-): Promise<HTMLCanvasElement> {
+) {
   return toSvgDataURL(domNode, options)
     .then(createImage)
     .then(delay(100))
@@ -59,9 +59,9 @@ export function toCanvas(
 };
 
 export function toPixelData(
-  domNode: HTMLElement,
+  domNode,
   options,
-): Promise<Array> {
+) {
   const width = options.width || getNodeWidth(domNode)
   const height = options.height || getNodeHeight(domNode)
 
@@ -72,27 +72,27 @@ export function toPixelData(
 };
 
 export function toPng(
-  domNode: HTMLElement,
+  domNode,
   options,
-): Promise<String> {
+) {
   return toCanvas(domNode, options).then(canvas => (
     canvas.toDataURL()
   ))
 };
 
 export function toJpeg(
-  domNode: HTMLElement,
+  domNode,
   options,
-): Promise<String> {
+) {
   return toCanvas(domNode, options).then(canvas => (
     canvas.toDataURL('image/jpeg', options.quality || 1)
   ))
 };
 
 export function toBlob(
-  domNode: HTMLElement,
+  domNode,
   options,
-): Promise<Blob> {
+) {
   return toCanvas(domNode, options).then(canvasToBlob)
 };
 
