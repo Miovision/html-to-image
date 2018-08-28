@@ -34,13 +34,12 @@ export function parseWebFontRules(clonedNode) {
 }
 
 export default function embedWebFonts(
-  clonedNode,
-  options,
+  clonedNode
 ) {
   return parseWebFontRules(clonedNode)
     .then(rules => Promise.all(rules.map((rule) => {
       const baseUrl = (rule.parentStyleSheet || {}).href
-      return embedResources(rule.cssText, baseUrl, options)
+      return embedResources(rule.cssText, baseUrl)
     })))
     .then(cssStrings => cssStrings.join('\n'))
     .then((cssString) => {

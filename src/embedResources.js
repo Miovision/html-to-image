@@ -52,13 +52,12 @@ function parseURLs(str) {
 function embed(
   cssString,
   resourceURL,
-  baseURL,
-  options,
+  baseURL
 ) {
   const resolvedURL = baseURL ? resolveUrl(resourceURL, baseURL) : resourceURL
 
   return Promise.resolve(resolvedURL)
-    .then(url => getBlobFromURL(url, options))
+    .then(url => getBlobFromURL(url))
     .then(data => toDataURL(data, getMimeType(resourceURL)))
     .then(dataURL => cssString.replace(urlToRegex(resourceURL), `$1${dataURL}$3`))
     .then(content => content, () => resolvedURL)
@@ -70,8 +69,7 @@ export function shouldEmbed(string) {
 
 export default function embedResources(
   cssString,
-  baseUrl,
-  options,
+  baseUrl
 ) {
   if (!shouldEmbed(cssString)) {
     return Promise.resolve(cssString)
@@ -80,7 +78,7 @@ export default function embedResources(
   return Promise.resolve(cssString)
     .then(parseURLs)
     .then(urls => urls.reduce(
-      (done, url) => done.then(ret => embed(ret, url, baseUrl, options)),
+      (done, url) => done.then(ret => embed(ret, url, baseUrl)),
       Promise.resolve(cssString),
     ))
 }

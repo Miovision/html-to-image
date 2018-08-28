@@ -9,21 +9,10 @@ const TIMEOUT = 30000
 // will redirect to 'http://something.com/65fc2ffcc8aea7ba65a1d1feda173540'
 
 
-export default function getBlobFromURL(url, options) {
-  // cache bypass so we dont have CORS issues with cached images
-  // ref: https://developer.mozilla.org/en/docs/Web/API/XMLHttpRequest/Using_XMLHttpRequest#Bypassing_the_cache
-  if (options.cacheBust) {
-    url += ((/\?/).test(url) ? '&' : '?') + (new Date()).getTime() // eslint-disable-line
-  }
+export default function getBlobFromURL(url) {
 
   const failed = (err) => {
     let placeholder = ''
-    if (options.imagePlaceholder) {
-      const split = options.imagePlaceholder.split(/,/)
-      if (split && split[1]) {
-        placeholder = split[1] // eslint-disable-line
-      }
-    }
 
     let msg = `Failed to fetch resource: ${url}`
 
