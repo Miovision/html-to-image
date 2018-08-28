@@ -1,10 +1,10 @@
 import { svgToDataURL } from './utils'
 
 export default function createSvgDataURL(
-  clonedNode,
-  width,
-  height,
-) {
+  clonedNode: HTMLElement,
+  width: number,
+  height: number,
+): Promise<String> {
   const xmlns = 'http://www.w3.org/2000/svg'
   const svg = document.createElementNS(xmlns, 'svg')
   const foreignObject = document.createElementNS(xmlns, 'foreignObject')

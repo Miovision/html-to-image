@@ -4,9 +4,9 @@ import embedResources from './embedResources'
 
 
 function embedBackground(
-  clonedNode,
-  options,
-) {
+  clonedNode: HTMLElement,
+  options: Object,
+): Promise<HTMLElement> {
   const background = clonedNode.style.getPropertyValue('background')
   if (!background) {
     return Promise.resolve(clonedNode)
@@ -26,9 +26,9 @@ function embedBackground(
 }
 
 function embedImageNode(
-  clonedNode,
-  options,
-) {
+  clonedNode: HTMLElement,
+  options: Object,
+): Promise<HTMLElement> {
   if (!(clonedNode instanceof HTMLImageElement) || isDataUrl(clonedNode.src)) {
     return Promise.resolve(clonedNode)
   }
@@ -45,9 +45,9 @@ function embedImageNode(
 }
 
 function embedChildren(
-  clonedNode,
-  options,
-) {
+  clonedNode: HTMLElement,
+  options: Object,
+): Promise<HTMLElement> {
   const children = toArray(clonedNode.childNodes)
   const deferreds = children.map(child => embedImages(child, options)) // eslint-disable-line
 
@@ -55,9 +55,9 @@ function embedChildren(
 }
 
 export default function embedImages(
-  clonedNode,
-  options,
-) {
+  clonedNode: HTMLElement,
+  options: Object,
+): Promise<HTMLElement> {
   if (!(clonedNode instanceof Element)) {
     return Promise.resolve(clonedNode)
   }

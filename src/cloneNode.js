@@ -2,7 +2,7 @@ import { createImage, toArray, svgToDataURL } from './utils'
 import clonePseudoElements from './clonePseudoElements'
 
 
-function cloneSingleNode(nativeNode) {
+function cloneSingleNode(nativeNode: HTMLElement): Promise<HTMLElement> {
   if (nativeNode instanceof HTMLCanvasElement) {
     return createImage(nativeNode.toDataURL())
   } else if (nativeNode.tagName && nativeNode.tagName.toLowerCase() === 'svg') {
@@ -15,10 +15,10 @@ function cloneSingleNode(nativeNode) {
 }
 
 function cloneChildren(
-  nativeNode,
-  clonedNode,
-  filter,
-) {
+  nativeNode: HTMLElement,
+  clonedNode: HTMLElement,
+  filter: Function,
+): Promise<HTMLElement> {
   const children = toArray(nativeNode.childNodes)
   if (children.length === 0) {
     return Promise.resolve(clonedNode)
@@ -36,8 +36,8 @@ function cloneChildren(
 }
 
 function cloneCssStyle(
-  nativeNode,
-  clonedNode,
+  nativeNode: HTMLElement,
+  clonedNode: HTMLElement,
 ) {
   const source = window.getComputedStyle(nativeNode)
   const target = clonedNode.style
@@ -57,8 +57,8 @@ function cloneCssStyle(
 }
 
 function cloneInputValue(
-  nativeNode,
-  clonedNode,
+  nativeNode: HTMLElement,
+  clonedNode: HTMLElement,
 ) {
   if (nativeNode instanceof HTMLTextAreaElement) {
     clonedNode.innerHTML = nativeNode.value
@@ -70,9 +70,9 @@ function cloneInputValue(
 }
 
 function decorate(
-  nativeNode,
-  clonedNode,
-) {
+  nativeNode: HTMLElement,
+  clonedNode: HTMLElement,
+): Promise<HTMLElement> {
   if (!(clonedNode instanceof Element)) {
     return clonedNode
   }
@@ -85,10 +85,10 @@ function decorate(
 }
 
 export default function cloneNode(
-  domNode,
-  filter,
-  isRoot,
-) {
+  domNode: HTMLElement,
+  filter: Function,
+  isRoot: Boolean,
+): Promise<HTMLElement> {
   if (!isRoot && filter && !filter(domNode)) {
     return Promise.resolve()
   }
