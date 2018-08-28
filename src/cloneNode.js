@@ -17,6 +17,7 @@ function cloneSingleNode(nativeNode) {
 function cloneChildren(
   nativeNode,
   clonedNode,
+  filter,
 ) {
   const children = toArray(nativeNode.childNodes)
   if (children.length === 0) {
@@ -25,7 +26,7 @@ function cloneChildren(
 
   // clone children in order
   return children.reduce((done, child) => done
-    .then(() => cloneNode(child)) // eslint-disable-line
+    .then(() => cloneNode(child, filter)) // eslint-disable-line
     .then((clonedChild) => {
       if (clonedChild) {
         clonedNode.appendChild(clonedChild)
@@ -85,14 +86,15 @@ function decorate(
 
 export default function cloneNode(
   domNode,
+  filter,
   isRoot,
 ) {
-  if (!isRoot) {
+  if (!isRoot && filter && !filter(domNode)) {
     return Promise.resolve()
   }
 
   return Promise.resolve(domNode)
     .then(cloneSingleNode)
-    .then(clonedNode => cloneChildren(domNode, clonedNode))
+    .then(clonedNode => cloneChildren(domNode, clonedNode, filter))
     .then(clonedNode => decorate(domNode, clonedNode))
 }
