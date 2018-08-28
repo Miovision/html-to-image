@@ -8,7 +8,7 @@ import {
 
 const URL_REGEX = /url\((['"]?)([^'"]+?)\1\)/g
 
-function resolveUrl(url: String, baseUrl: String): String {
+function resolveUrl(url, baseUrl) {
   if (url.match(/^[a-z]+:\/\//i)) { // url is absolute already
     return url
   } else if (url.match(/^\/\//)) {
@@ -30,15 +30,15 @@ function resolveUrl(url: String, baseUrl: String): String {
   return a.href
 }
 
-function escape(url: String): String {
+function escape(url) {
   return url.replace(/([.*+?^${}()|\[\]\/\\])/g, '\\$1') // eslint-disable-line
 }
 
-function urlToRegex(url: String): RegExp {
+function urlToRegex(url) {
   return new RegExp(`(url\\(['"]?)(${escape(url)})(['"]?\\))`, 'g')
 }
 
-function parseURLs(str: String): Array<String> {
+function parseURLs(str) {
   const result = []
 
   str.replace(URL_REGEX, (raw, quotation, url) => {
@@ -50,11 +50,11 @@ function parseURLs(str: String): Array<String> {
 }
 
 function embed(
-  cssString: String,
-  resourceURL: String,
-  baseURL: String,
-  options: Object,
-): Promise<String> {
+  cssString,
+  resourceURL,
+  baseURL,
+  options,
+) {
   const resolvedURL = baseURL ? resolveUrl(resourceURL, baseURL) : resourceURL
 
   return Promise.resolve(resolvedURL)
@@ -64,15 +64,15 @@ function embed(
     .then(content => content, () => resolvedURL)
 }
 
-export function shouldEmbed(string: String): Boolean {
+export function shouldEmbed(string) {
   return string.search(URL_REGEX) !== -1
 }
 
 export default function embedResources(
-  cssString: String,
-  baseUrl: String,
-  options: Object,
-): Promise<String> {
+  cssString,
+  baseUrl,
+  options,
+) {
   if (!shouldEmbed(cssString)) {
     return Promise.resolve(cssString)
   }

@@ -1,7 +1,7 @@
 export default function applyStyleWithOptions(
-  clonedNode: HTMLElement,
-  options: Object,
-): HTMLElement {
+  clonedNode,
+  options,
+) {
   const { style } = clonedNode
 
   if (options.backgroundColor) {
